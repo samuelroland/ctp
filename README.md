@@ -118,7 +118,7 @@ TODO: Implement EDIT keyword to easily do search and replace
 In case this repository is updated, you can pull changes and do a rebuild
 ```sh
 git pull
-docker build -t jtpc .
+docker build -t ctp .
 ```
 
 ## How to uninstall
