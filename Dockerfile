@@ -19,8 +19,7 @@ WORKDIR /hpp2plantuml
 RUN pip install . --no-cache-dir --break-system-packages
 
 # Final CLI
-COPY *.java .
-RUN javac CLI.java
-RUN javac PostMix.java
+COPY src/* .
+RUN javac *.java
 
 ENTRYPOINT ["java", "CLI"]
