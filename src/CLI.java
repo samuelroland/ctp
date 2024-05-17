@@ -45,7 +45,7 @@ public class CLI {
             fail("An error happened during conversion, the program has stopped");
 
         // Run PostMix
-
+        System.out.println("Running PostMix");
     }
 
     public static void fail(String error) {

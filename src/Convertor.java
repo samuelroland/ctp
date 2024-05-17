@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 abstract class Convertor {
     private String lang;
 
@@ -17,11 +19,15 @@ abstract class Convertor {
 
     public String[] getTransformedArgs(String path, String filename) {
         var args = args();
+        ArrayList<String> newArgs = new ArrayList<>(args.length);
         for (var arg : args) {
-            arg.replace(FILE_INSERT, filename);
-            arg.replace(FOLDER_INSERT, path);
+            String s = arg.replace(FILE_INSERT, filename);
+            s = s.replace(FOLDER_INSERT, path);
+            newArgs.add(s);
         }
-        return args;
+
+        // https://stackoverflow.com/questions/9572795/convert-list-to-array-in-java
+        return newArgs.toArray(new String[0]);
     }
 
     // Run convertion via the given external CLI and args
