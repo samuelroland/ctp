@@ -6,7 +6,7 @@ public class CLI {
         Util.printHelp();
 
         // Available convertors for various languages
-        Convertor[] convertors = new Convertor[] { new JavaConvertor(), new CppConvertor() };
+        Converter[] convertors = new Converter[] { new JavaConvertor(), new CppConvertor() };
 
         if (args.length == 0) {
             return;
@@ -27,7 +27,7 @@ public class CLI {
         String tmpOutput = output + ".tmp";
 
         // Checking if lang is supported
-        Convertor chosenConvertor = null;
+        Converter chosenConvertor = null;
         String givenLang = args[0];
         for (var c : convertors) {
             if (c.lang().equals(givenLang)) {

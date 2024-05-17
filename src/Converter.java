@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
-abstract class Convertor {
+abstract class Converter {
     private String lang;
 
     // Constants to indicate where to replace the output file and scan folder
     public static final String FILE_INSERT = "{FILE}";
     public static final String FOLDER_INSERT = "{FOLDER}";
 
-    public Convertor(String lang) {
+    public Converter(String lang) {
         this.lang = lang;
     }
 

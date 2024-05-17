@@ -1,8 +1,8 @@
 
-class JavaConvertor extends Convertor {
+class JavaConvertor extends Converter {
     private static final String[] args = new String[] {
             "java", "-jar", "/cli/plantuml-parser-cli.jar",
-            "-f", Convertor.FILE_INSERT,
+            "-f", Converter.FILE_INSERT,
             "-fdef", "-fpri", "-fpro",
             "-fpub", "-mdef", "-mpri", "-mpro",
             "-mpub",
