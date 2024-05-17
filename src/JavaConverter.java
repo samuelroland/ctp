@@ -1,12 +1,21 @@
 
 class JavaConvertor extends Converter {
+    // Help: See options help on
+    // https://github.com/samuelroland/plantuml-parser/blob/main/plantuml-parser-cli/README.md
+
     private static final String[] args = new String[] {
             "java", "-jar", "/cli/plantuml-parser-cli.jar",
-            "-f", Converter.FILE_INSERT,
-            "-fdef", "-fpri", "-fpro",
-            "-fpub", "-mdef", "-mpri", "-mpro",
-            "-mpub",
-            "-sdctr" };
+            "-f", Converter.FOLDER_INSERT,
+            "-o", Converter.FILE_INSERT,
+            "-fdef", "-fpri", "-fpro", "-fpub", // fields (attributes): package, private, protected, public
+            "-mdef", "-mpri", "-mpro", "-mpub", // methods: same
+            "-sdctr" }; // TODO: what's this ??
+
+    private static final String defaultStyle = """
+            hide empty members
+            hide circle
+            skinparam classAttributeIconSize 0
+            """;
 
     JavaConvertor() {
         super("java");
@@ -15,5 +24,10 @@ class JavaConvertor extends Converter {
     @Override
     public String[] args() {
         return args;
+    }
+
+    @Override
+    String defaultPumlStyle() {
+        return defaultStyle;
     }
 }

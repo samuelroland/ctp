@@ -49,7 +49,7 @@ public class CLI {
     }
 
     public static void fail(String error) {
-        System.out.println("\nError: " + error);
+        System.err.println("\nError: " + error);
         System.exit(1);
     }
 }
