@@ -24,6 +24,7 @@ Docs: See README.md in repository
 
 TODO: examples with current codebase
 
+
 ## Introduction
 **Status**  
 I don't plan to maintain this project, I want to "just make it work" and will not expand it further. But I'm happy to document how to use it and how it works in case it's useful to someone else in my class or outside. I guess a lot of IT students are learning and need to have up-to-date UML diagrams... If you want to do other changes or support other languages, feel free to fork the project and continue on your own :)
@@ -72,6 +73,8 @@ I support languages when I need it. When I found the best generator, as it gener
     ctp java src/main diagram
     ```
 See more options and usage below.
+
+**Warning: the CLI erase the latest diagram file, make sure you didn't change anything outside the static section or that you can recover it. Ex: `ctp java src/ project` will erase `project.puml` and `project.puml.tmp`.**
 
 ## Advanced usage
 
@@ -130,3 +133,45 @@ docker build -t ctp .
 docker image rm ctp
 # and remove your alias ctp
 ```
+
+## How to extend or enhance
+I support the languages I need, 
+Need to support another generator for another programming language ? Need to tweak the default style or enhance the post mix ? Here are a few hints on how you can do it. If you consider your changes useful, please open a PR here.
+
+**New language support**
+1. Find or create a new plantuml generator for this language. It needs to have a CLI associated to be called by `ctp`.
+1. Eventually fork it to adapt it to your own needs
+1. Create a new converter class that extends `Convertor`
+1. Use it in `CTP.main()` inside `convertors` variable
+1. Define a constructor to call parent constructor with a language identifier
+1. Define the arguments needed (included the name of the external CLI) with `FILE_INSERT` and `FOLDER_INSERT` constants to indicate where to insert those 2 info
+1. If needed, override `defaultPumlStyle()` with more or other default styles
+1. Build/Install your external CLI in the Dockerfile``, so your command can be called from inside the container.
+1. Build the `Dockerfile` and try it !
+
+Here is an example with how the C++ converter is defined (CLI is called `hpp2plantuml`)
+```java
+class CppConvertor extends Converter {
+    private static final String[] args = new String[] {
+            "hpp2plantuml",
+            "-i", Converter.FOLDER_INSERT + "/*.h",
+            "-i", Converter.FOLDER_INSERT + "/**/*.h",
+            "-i", Converter.FOLDER_INSERT + "/*.hpp",
+            "-i", Converter.FOLDER_INSERT + "/**/*.hpp",
+            "-i", Converter.FOLDER_INSERT + "/*.cpp",
+            "-i", Converter.FOLDER_INSERT + "/**/*.cpp",
+            "-o", Converter.FILE_INSERT };
+
+    CppConvertor() {
+        super("cpp");   //this key is what should be given as first param when calling ctp
+    }
+
+    @Override
+    public String[] args() {
+        return args;
+    }
+}
+```
+
+**Change supported generators to your forks**
+Just edit `Dockerfile` to clone your forks instead mines :)
