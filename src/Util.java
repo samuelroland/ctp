@@ -38,8 +38,8 @@ class Util {
     public static final String getDefaultContentWithDefaultStyle(String defaultStyle) {
         return "' " + STATIC_START
                 + "\n' " + AUTO_GENERATED_TEXT
-                + "\n' Style\n" + defaultStyle
-                + "\n' Additions\n' "
+                + "\n\n' Style\n" + defaultStyle
+                + "\n' Additions\n\n' "
                 + STATIC_REMOVE_KW + "\n\n' " + STATIC_END + "\n";
     }
 

@@ -31,7 +31,7 @@ public class PostMix {
             text = pushStaticSection(tmpText, staticSection);
         }
 
-        // Finally write the mixed text to final file (without)
+        // Finally write the mixed text to final file and delete tmp file
         Util.writeEntireFile(outfile, text);
         Util.deleteFile(outfiletmp);
     }
@@ -57,7 +57,7 @@ public class PostMix {
     public static String extractStaticSection(String schema) {
         if (!doesContainStaticSection(schema))
             return "";
-        return schema.substring(schema.indexOf(Util.STATIC_START),
+        return schema.substring(schema.indexOf(Util.STATIC_START) - 2, // -2 because "' " is 2 chars
                 schema.indexOf(Util.STATIC_END) + Util.STATIC_END.length());
     }
 
@@ -86,7 +86,9 @@ public class PostMix {
             }
         }
 
-        Util.print("< no pattern found >");
+        if (!appliedOnePattern) {
+            Util.print("< no pattern found under key REMOVE >");
+        }
         return tmp;
     }
 }
