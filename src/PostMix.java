@@ -12,31 +12,36 @@ public class PostMix {
         if (tmpText.trim().isEmpty())
             Util.fail("Error: File " + outfile + " not found or is empty but should be present.");
 
-        Util.print("> Starting post generation steps");
+        Util.print("> Starting post mix steps");
 
         // Try reading an existing file to extract its static section before erasing
         // or just use the default one if it doesn't exist
-        String text = Util.readEntireFile(outfile);
+        String text = "";
+        if (Util.fileExist(outfile)) {
+            text = Util.readEntireFile(outfile);
+        }
         if (text.trim().isEmpty() || !doesContainStaticSection(text)) {
             Util.print(">> Adding default static section");
-            text = pushStaticSection(tmpText);
+            text = pushStaticSection(tmpText, Util.STATIC_DEFAULT_CONTENT);
+            // note: no need to call removePatterns() as we have no existing static section
         } else {
             Util.print(">> Reusing existing static section");
             String staticSection = extractStaticSection(text);
             tmpText = removePatterns(tmpText, staticSection);
-            text = pushStaticSection(tmpText);
+            text = pushStaticSection(tmpText, staticSection);
         }
 
-        // Finally write the mixed text to final file (without .tmp)
+        // Finally write the mixed text to final file (without)
         Util.writeEntireFile(outfile, text);
+        Util.deleteFile(outfiletmp);
     }
 
     // Push the static section (just add id after @startuml) in given PUML schema
-    public static String pushStaticSection(String schema) {
+    public static String pushStaticSection(String schema, String sectionToPush) {
         if (schema.indexOf(Util.START_MARKER_PUML) == -1)
             Util.fail("Error: temp diagram file has no @startuml directive... Failed to insert static section.");
 
-        return Util.START_MARKER_PUML + "\n" + Util.STATIC_DEFAULT_CONTENT + "\n"
+        return Util.START_MARKER_PUML + "\n" + sectionToPush + "\n"
                 + schema.substring(Util.START_MARKER_PUML.length());
     }
 

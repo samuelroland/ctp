@@ -81,6 +81,14 @@ class Util {
         }
     }
 
+    public static void deleteFile(String path) {
+        new File(path).delete();
+    }
+
+    public static boolean fileExist(String path) {
+        return new File(path).exists();
+    }
+
     public static void fail(String error) {
         System.err.println("\nError: " + error);
         System.exit(1);

@@ -48,5 +48,6 @@ public class CLI {
 
         // Run PostMix
         PostMix.run(outfile);
+        Util.print("Successfully generated " + outfile + " :)");
     }
 }
