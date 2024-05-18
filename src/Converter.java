@@ -7,16 +7,29 @@ abstract class Converter {
     public static final String FILE_INSERT = "{FILE}";
     public static final String FOLDER_INSERT = "{FOLDER}";
 
+    private static final String defaultStyle = """
+            hide empty members
+            hide circle
+            skinparam classAttributeIconSize 0
+            """;
+
     public Converter(String lang) {
         this.lang = lang;
     }
 
-    abstract String[] args();
+    // This will be defined by concrete classes
+    abstract public String[] args();
+
+    // This can be extended by concrete classes for specific default settings
+    public String defaultPumlStyle() {
+        return defaultStyle;
+    }
 
     public String lang() {
         return lang;
     }
 
+    // Replace FILE_INSERT and FOLDER_INSERT in all args
     public String[] getTransformedArgs(String path, String filename) {
         var args = args();
         ArrayList<String> newArgs = new ArrayList<>(args.length);
@@ -30,19 +43,18 @@ abstract class Converter {
         return newArgs.toArray(new String[0]);
     }
 
-    // Run convertion via the given external CLI and args
-    public boolean convert(String path, String filename) {
-        System.out.println("Running convertion in lang " + lang);
+    // Run convertion via the external CLI
+    public boolean convert(String path, String outfile) {
+        System.out.println("> Running convertion in lang " + lang);
 
         try {
-            var process = new ProcessBuilder(getTransformedArgs(path, filename)).start();
+            var process = new ProcessBuilder(getTransformedArgs(path, outfile + Util.TMP_EXT)).start();
             String output = Util.readEntireStream(process.getInputStream());
-            System.out.println("OUTPUT:\n" + output);
+            System.out.println("External CLI output:\n" + output);
             return true;
         } catch (Exception e) {
             System.out.println("Error: " + e);
             return false;
         }
-
     }
 }

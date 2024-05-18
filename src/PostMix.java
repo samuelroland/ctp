@@ -6,7 +6,7 @@ public class PostMix {
 
     // Given an outfile (without TMP_EXT), read it, add previous or default static
     // section and save the final file (without TMP_EXT)
-    public static void run(String outfile) {
+    public static void run(String outfile, String defaultStyle) {
         String outfiletmp = outfile + Util.TMP_EXT;
         String tmpText = Util.readEntireFile(outfiletmp);
         if (tmpText.trim().isEmpty())
@@ -22,7 +22,7 @@ public class PostMix {
         }
         if (text.trim().isEmpty() || !doesContainStaticSection(text)) {
             Util.print(">> Adding default static section");
-            text = pushStaticSection(tmpText, Util.STATIC_DEFAULT_CONTENT);
+            text = pushStaticSection(tmpText, Util.getDefaultContentWithDefaultStyle(defaultStyle));
             // note: no need to call removePatterns() as we have no existing static section
         } else {
             Util.print(">> Reusing existing static section");

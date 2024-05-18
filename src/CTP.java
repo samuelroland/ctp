@@ -47,7 +47,7 @@ public class CTP {
             Util.fail("An error happened during conversion, the program has stopped");
 
         // Run PostMix
-        PostMix.run(outfile);
+        PostMix.run(outfile, chosenConvertor.defaultPumlStyle());
         Util.print("Successfully generated " + outfile + " :)");
     }
 }

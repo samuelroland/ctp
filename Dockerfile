@@ -22,4 +22,4 @@ RUN pip install . --no-cache-dir --break-system-packages
 COPY src/* .
 RUN javac *.java
 
-ENTRYPOINT ["java", "CLI"]
+ENTRYPOINT ["java", "CTP"]
