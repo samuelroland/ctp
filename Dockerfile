@@ -19,7 +19,11 @@ WORKDIR /hpp2plantuml
 RUN pip install . --no-cache-dir --break-system-packages
 
 # Final CLI
-COPY src/* .
-RUN javac *.java
+WORKDIR /ctp
+COPY src/* /ctp/src/
+RUN javac /ctp/src/*.java
 
-ENTRYPOINT ["java", "CTP"]
+# Working directory is where we mount current folder and where relative paths start
+WORKDIR /code
+
+ENTRYPOINT ["java", "-classpath", "/ctp/src", "CTP"]

@@ -49,8 +49,8 @@ abstract class Converter {
 
         try {
             var process = new ProcessBuilder(getTransformedArgs(path, outfile + Util.TMP_EXT)).start();
-            String output = Util.readEntireStream(process.getInputStream());
-            System.out.println("External CLI output:\n" + output);
+            process.waitFor();
+            System.out.println(Util.readEntireStream(process.getErrorStream()));
             return true;
         } catch (Exception e) {
             System.out.println("Error: " + e);
