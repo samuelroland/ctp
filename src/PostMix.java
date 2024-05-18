@@ -66,6 +66,7 @@ public class PostMix {
         Util.print(">> Removing following patterns");
         String[] lines = staticSection.substring(0, staticSection.indexOf(Util.STATIC_END)).split("\n");
         boolean foundRemoveKeyword = false;
+        boolean appliedOnePattern = false;
 
         for (String line : lines) {
             // Search for STATIC_REMOVE_KW
@@ -81,9 +82,11 @@ public class PostMix {
                 String regex = line.substring(2);
                 Util.print(">>> " + regex);
                 tmp = tmp.replaceAll(regex, "");
+                appliedOnePattern = true;
             }
         }
 
+        Util.print("< no pattern found >");
         return tmp;
     }
 }

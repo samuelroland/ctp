@@ -48,6 +48,6 @@ public class CTP {
 
         // Run PostMix
         PostMix.run(outfile, chosenConvertor.defaultPumlStyle());
-        Util.print("Successfully generated " + outfile + " :)");
+        Util.print("\nSuccessfully generated " + outfile + " :)");
     }
 }
