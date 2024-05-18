@@ -4,6 +4,8 @@ import java.nio.charset.StandardCharsets;
 // Various util functions and constants
 class Util {
 
+    public static final String PUML_EXT = ".puml";
+    public static final String TMP_EXT = ".tmp";
     // Help text shown on invalid args
     private static final String HELP = """
             CTP - Code To PlantUML
@@ -12,23 +14,24 @@ class Util {
 
             Languages: java | cpp
             Path: a path to a folder to scan (must be inside the current directory)
-            Output: the name of output diagram file (generally ending in .puml)
+            Output: the name of output diagram file (extension .puml is added if missing)
 
             Examples:
-            ctp cpp src diagram.puml
-            ctp cpp . classdiagram.plantuml
-            ctp java app/src/main/org/example/stack stack.puml
+            ctp cpp src diagram
+            ctp cpp . classdiagram
+            ctp java app/src/main/org/example/stack stack
             ctp java src/ project.puml
 
             Repository: https://github.com/samuelroland/ctp
+            Docs: See README.md in repository
             """;
 
     // Delimiters for static section
-    private static final String STATIC_START = "STATIC";
-    private static final String STATIC_END = "ENDSTATIC";
-    private static final String STATIC_REMOVE_KW = "REMOVE";
-    private static final String STATIC_REPLACE_KW = "REPLACE"; // TODO: implement this
-    private static final String START_MARKER_PUML = "@startuml\n";
+    public static final String STATIC_START = "STATIC";
+    public static final String STATIC_END = "ENDSTATIC";
+    public static final String STATIC_REMOVE_KW = "REMOVE";
+    public static final String STATIC_REPLACE_KW = "REPLACE"; // TODO: implement this
+    public static final String START_MARKER_PUML = "@startuml\n";
 
     // Default content of the static section in output file
     private static final String STATIC_DEFAULT_CONTENT = "' " + STATIC_START + """
@@ -41,7 +44,7 @@ class Util {
     private Util() {
     }
 
-    public static void printHelp() {
+    public static void showHelp() {
         System.out.println(HELP);
     }
 
@@ -49,7 +52,6 @@ class Util {
         return STATIC_DEFAULT_CONTENT;
     }
 
-    //
     public static String readEntireStream(InputStream stream) {
         String text = "";
         try (var reader = new BufferedReader(
@@ -69,24 +71,29 @@ class Util {
         try (var stream = new FileInputStream(path)) {
             return Util.readEntireStream(stream);
         } catch (Exception e) {
-            CLI.fail("Failed to read file " + path);
+            Util.fail("Failed to read file " + path);
             return null;
         }
     }
 
-    // Push the static section (just add id after @startuml) in given PUML schema
-    public static String pushStaticSection(String schema, String staticSection) {
-        if (schema.indexOf(START_MARKER_PUML) == -1)
-            CLI.fail("Error: temp diagram file has no @startuml directive... Failed to insert static section.");
+    // Write given content on given file path
+    public static void writeEntireFile(String path, String content) {
+        try (var writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8))) {
 
-        return START_MARKER_PUML + "\n" + staticSection + "\n" + schema.substring(START_MARKER_PUML.length());
+            writer.write(content);
+            writer.flush();
+        } catch (Exception e) {
+            Util.fail(e.toString());
+        }
     }
 
-    // Look in given schema if already contains a static section to know if we need
-    // to insert a default one
-    public static boolean doesContainStaticSection(String schema) {
-        int startPos = schema.indexOf(STATIC_START);
-        int endPos = schema.indexOf(STATIC_END, startPos);
-        return startPos != -1 && endPos != -1;
+    public static void fail(String error) {
+        System.err.println("\nError: " + error);
+        System.exit(1);
+    }
+
+    public static void print(Object msg) {
+        System.out.println(msg);
     }
 }

@@ -8,14 +8,18 @@ CTP - Code To PlantUML
 
 Usage: ctp [lang] [path] [output]
 
-Available langs: java | cpp
-Path: a path to a folder inside the current directory
-Output: the name of resulting diagram file (generally in .puml)
+Languages: java | cpp
+Path: a path to a folder to scan (must be inside the current directory)
+Output: the name of output diagram file (extension .puml is added if missing)
 
 Examples:
-ctp cpp src diagram.puml
-ctp cpp . classdiagram.plantuml
-ctp java app/src/main/org/example/stack stack.puml
+ctp cpp src diagram
+ctp cpp . classdiagram
+ctp java app/src/main/org/example/stack stack
+ctp java src/ project.puml
+
+Repository: https://github.com/samuelroland/ctp
+Docs: See README.md in repository
 ```
 
 TODO: examples with current codebase
@@ -34,13 +38,13 @@ I support languages when I need it. When I found the best generator, as it gener
 - Fork of generator: https://github.com/samuelroland/plantuml-parser
 - Modifications: see README of given repos
 - License: [Apache-2.0](https://github.com/samuelroland/plantuml-parser/blob/main/LICENSE)
-- Note: Thanks a lot to @shuzijun for your effort in making in this nice tool, this got me started with this repository !
+- Note: Thanks a lot to @shuzijun for your effort in making in this nice tool, this got me started with this little project !
 
 ### Python
 - Fork of generator: https://github.com/samuelroland/hpp2plantuml
 - Modifications: see README of given repos
 - License: [MIT](https://github.com/samuelroland/hpp2plantuml/blob/master/LICENSE) - Copyright (c) 2016 T
-- Note: Thanks a lot to @thibaultmarin for this nice converter, it works pretty well !
+- Note: Thanks a lot to @thibaultmarin for this nice converter, it's really useful !
 
 **TODO**
 
@@ -56,16 +60,16 @@ I support languages when I need it. When I found the best generator, as it gener
    ```
 1. Run the CLI
    Note: We mount the current folder to `/cli/code` in container, to give it access to the current folder. Therefore, the given path (first argument) needs to be 
-    ```
+    ```sh
     docker run -v .:/cli/code ctp
     ```
-1. Instead of typing `docker run -v .:/cli/code ctp` everytime I recommend to setup an alias like this. You can persist this alias in your shell config (i.e. `.bashrc`)
+1. Instead of typing `docker run -v .:/cli/code ctp` every time, I recommend to setup an alias like this. You can persist this alias in your shell config (i.e. `.bashrc`)
     ```sh
     alias ctp="docker run -v .:/cli/code ctp"
     ```
-    You can now just run 
+    You can now just run it, here is an example for a Java project with all classes inside src/main and an output diagram named diagram.puml.
     ```sh
-    ctp src/main diagram.puml
+    ctp java src/main diagram
     ```
 See more options and usage below.
 
