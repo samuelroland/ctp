@@ -4,6 +4,7 @@ class JavaConvertor extends Converter {
     // https://github.com/samuelroland/plantuml-parser/blob/main/plantuml-parser-cli/README.md
     private static final String[] args = new String[] {
             "java", "-jar", "/cli/plantuml-parser-cli.jar",
+            "-l", "JAVA_17",
             "-f", Converter.FOLDER_INSERT,
             "-o", Converter.FILE_INSERT,
             "-fdef", "-fpri", "-fpro", "-fpub", // fields (attributes): package, private, protected, public
