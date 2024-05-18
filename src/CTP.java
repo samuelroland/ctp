@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class CLI {
+public class CTP {
 
     public static void main(String args[]) {
         // Available convertors for various languages
