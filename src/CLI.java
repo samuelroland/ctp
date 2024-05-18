@@ -3,28 +3,30 @@ import java.io.*;
 public class CLI {
 
     public static void main(String args[]) {
-        Util.printHelp();
-
         // Available convertors for various languages
         Converter[] convertors = new Converter[] { new JavaConvertor(), new CppConvertor() };
 
         if (args.length == 0) {
+            Util.showHelp();
             return;
         }
         if (args.length < 3) {
-            fail("expected arguments number to be 3 !");
+            Util.showHelp();
+            Util.fail("expected arguments number to be 3 !");
         }
 
         // Checking path is a valid directory
         String path = args[1];
         File f = new File(path);
         if (!f.exists() || !f.isDirectory()) {
-            fail("Unknown path or is not a directory: " + path);
+            Util.fail("Unknown path or is not a directory: " + path);
         }
 
         // Checking path is a valid directory
-        String output = args[2];
-        String tmpOutput = output + ".tmp";
+        String outfile = args[2];
+        if (!outfile.endsWith(Util.PUML_EXT)) {
+            outfile += Util.PUML_EXT; // Append PUML_EXT if not present in file name
+        }
 
         // Checking if lang is supported
         Converter chosenConvertor = null;
@@ -36,20 +38,15 @@ public class CLI {
             }
         }
         if (chosenConvertor == null)
-            fail("unsupported language `" + givenLang + "`");
+            Util.fail("unsupported language `" + givenLang + "`");
 
         // All args are valid, let's run external CLIs with params
-        var conversionResult = chosenConvertor.convert(path, tmpOutput);
+        var conversionResult = chosenConvertor.convert(path, outfile);
 
         if (conversionResult == false)
-            fail("An error happened during conversion, the program has stopped");
+            Util.fail("An error happened during conversion, the program has stopped");
 
         // Run PostMix
-        System.out.println("Running PostMix");
-    }
-
-    public static void fail(String error) {
-        System.err.println("\nError: " + error);
-        System.exit(1);
+        PostMix.run(outfile);
     }
 }
