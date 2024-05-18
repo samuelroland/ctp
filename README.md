@@ -60,13 +60,22 @@ I support languages when I need it. When I found the best generator, as it gener
     docker build -t ctp .
    ```
 1. Run the CLI
-   Note: We mount the current folder to `/cli/code` in container, to give it access to the current folder. Therefore, the given path (first argument) needs to be 
+   Note: We mount the current folder to `/code` in container, to give it access to the current folder. Therefore, the given path (first argument) needs to be 
     ```sh
-    docker run -v .:/cli/code ctp
+    docker run -v .:/code ctp
     ```
-1. Instead of typing `docker run -v .:/cli/code ctp` every time, I recommend to setup an alias like this. You can persist this alias in your shell config (i.e. `.bashrc`)
+1. Instead of typing `docker run -v .:/code ctp` every time, I recommend to setup an alias like this. You can persist this alias in your shell config (i.e. `.bashrc`)
     ```sh
-    alias ctp="docker run -v .:/cli/code ctp"
+    # Standard version
+    alias ctp="docker run -v .:/code ctp"
+
+    # Or if you run docker as root
+    ctp(){
+        sudo docker run -v .:/code ctp "$@"
+        if [ -f "$3.puml" ]; then
+            sudo chown $USER "$3.puml"
+        fi
+    }
     ```
     You can now just run it, here is an example for a Java project with all classes inside src/main and an output diagram named diagram.puml.
     ```sh
