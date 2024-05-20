@@ -77,7 +77,7 @@ RobotPack -[hidden]- UpdatesPack
 Robot <|-- Roboto
 ```
 
-We want to remove these 2 attributes and use 2 associations instead
+In generated diagram, we want to remove these 2 attributes and use 2 associations instead
 ```
 class Game {
 	- robots: std::vector<RobotState>
@@ -97,7 +97,7 @@ Game "1"-->"*" RobotState: manage >
 Game "1"-->"*" Bonus: offer >
 ```
 
-We need to run generation again to have the remove patterns applied: `ctp cpp . diagram` and bam, here is the final diagram.
+We need to run generation again to have the remove patterns applied: `ctp cpp . diagram` and bam, the 2 lines have been removed, here is the final diagram.
 
 ![examples/cpp-example-2.png](examples/cpp-example-2.png)
 
