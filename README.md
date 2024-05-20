@@ -4,7 +4,7 @@
 
 ```sh
 $ ctp
-CTP - Code To PlantUML
+CTP - Code To PlantUML - v0.1
 
 Usage: ctp [lang] [path] [output]
 

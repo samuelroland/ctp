@@ -3,12 +3,14 @@ import java.nio.charset.StandardCharsets;
 
 // Various util functions and constants
 class Util {
+    private static final String VERSION = "v0.1";
+    private static final String INTRO = "CTP - Code To PlantUML - " + VERSION;
 
     public static final String PUML_EXT = ".puml";
     public static final String TMP_EXT = ".tmp";
     // Help text shown on invalid args
-    private static final String HELP = """
-            CTP - Code To PlantUML
+    private static final String HELP = INTRO + """
+
 
             Usage: ctp [lang] [path] [output]
 
