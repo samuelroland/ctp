@@ -50,7 +50,10 @@ abstract class Converter {
         try {
             var process = new ProcessBuilder(getTransformedArgs(path, outfile + Util.TMP_EXT)).start();
             process.waitFor();
-            System.out.println(Util.readEntireStream(process.getErrorStream()));
+            System.out.println(Util.readEntireStream(process.getInputStream()));
+            String errorOutput = Util.readEntireStream(process.getErrorStream());
+            if (!errorOutput.isEmpty())
+                System.out.println("Errors: " + errorOutput);
             return true;
         } catch (Exception e) {
             System.out.println("Error: " + e);

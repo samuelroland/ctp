@@ -26,6 +26,18 @@ class Util {
             Docs: See README.md in repository
             """;
 
+    private static final String MANUAL_STEPS_SUGGEST = """
+
+            Suggested manual steps:
+            1. Read above output
+            2. In static section, add missing associations manually with cardinality
+            3. Use REMOVE patterns to remove the attributes that you just described with associations
+            4. Change styling if needed
+            5. Add notes like Integrity Constraint or other details
+            6. Add hidden links like `A -[hidden]- B` to make visual arrangements
+            7. It should be done !
+            """;
+
     // Delimiters for static section
     public static final String STATIC_START = "STATIC";
     public static final String STATIC_END = "ENDSTATIC";
@@ -48,6 +60,10 @@ class Util {
 
     public static void showHelp() {
         System.out.println(HELP);
+    }
+
+    public static void showManualStepsSuggestion() {
+        System.out.println(MANUAL_STEPS_SUGGEST);
     }
 
     public static String readEntireStream(InputStream stream) {
