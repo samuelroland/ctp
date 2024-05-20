@@ -70,6 +70,7 @@ I support languages when I need it. When I found the best generator, as it gener
 - License: [MIT](https://github.com/samuelroland/hpp2plantuml/blob/master/LICENSE) - Copyright (c) 2016 T
 - Note: Thanks a lot to @thibaultmarin for this nice converter, it's really useful !
 - They are known bugs, see the README
+- **Warning: only .h and .hpp (not .cpp) files are parsed in given folder ! Make sure free functions are declared in a header file and don't use the syntax `int a{}` as it will ignore the variable.**
 
 ## How to setup
 *I know this is not a straightforward setup but is the best I can do in the short time I invest in this mini project...*
@@ -103,6 +104,8 @@ I support languages when I need it. When I found the best generator, as it gener
     ```sh
     ctp java src/main diagram
     ```
+1. Make sure to remove do the manual work after generation (remove existing incorrect/incomplete associations, add missing one, changing style, add notes, ...)
+
 See more options and usage below.
 
 **Warning: the CLI erase the latest diagram file, make sure you didn't change anything outside the static section or that you can recover it. Ex: `ctp java src/ project` will erase `project.puml` and `project.puml.tmp`.**
