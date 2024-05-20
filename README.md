@@ -22,7 +22,7 @@ Repository: https://github.com/samuelroland/ctp
 Docs: See README.md in repository
 ```
 
-## Demo with current codebase
+## Demo with current Java codebase
 We have a folder structure with a few Java classes in `src`, the entrypoint is `CTP.java`
 ```
 .
@@ -48,12 +48,57 @@ See the generated file in [examples/ctp.puml](examples/ctp.puml) and [exported i
 
 ![examples/ctp.png](examples/ctp.png)
 
+## Demo with a C++ codebase
+I took a random C++ we made at school, let's clone the repos and run CTP:
+```
+git clone https://github.com/HEIGVD-PRG1-F-2022/lab06-lastrobotstanding-roboto.git
+cd lab06-lastrobotstanding-roboto
+ctp cpp . diagram
+```
 
-## Project status
-I don't plan to maintain this project, I want to "just make it work" and not expand it further. But I'm happy to document how to use it and how it works in case it's useful to someone else in my class or outside. I guess a lot of IT students are learning OOP and need to have up-to-date UML diagrams... If you want to do other changes or support other languages, feel free to contribute or continue in your own fork. If you want to take maintenance burden here, feel free to open an issue to discuss this :)
+It gives us this raw diagram
 
-## License
-The code present in this repository is released under [MIT](LICENSE). The licenses of supported generators is independent of this license as we are running the generators as separated CLIs (they are separated processes, ctp is just a glue around it to easily run them).
+![examples/cpp-example-1.png](examples/cpp-example-1.png)
+
+We want a title, scale the image, add hidden links to rearrange the diagram:
+```
+...
+scale 2
+title LastRobotsStanding game
+
+' Additions
+RobotState "1"*--"1" Robot: manage info >
+Game -[hidden]- Roboto
+RobotPack -[hidden]- UpdatesPack
+
+Robot <|-- Roboto
+```
+
+We want to remove these 2 attributes and use 2 associations instead
+```
+class Game {
+	- robots: std::vector<RobotState>
+	- boni: std::vector<Bonus>
+```
+
+so we add these 2 unique patterns under `REMOVE` (those are external class in a dependency, this is why it is not in this schema)
+```
+' REMOVE
+' - robots: std::vector<RobotState>
+' - boni: std::vector<Bonus>
+```
+and we add the associations manually
+```
+' Additions
+Game "1"-->"*" RobotState: manage >
+Game "1"-->"*" Bonus: offer >
+```
+
+We need to run generation again to have the remove patterns applied: `ctp cpp . diagram` and bam, here is the final diagram.
+
+![examples/cpp-example-2.png](examples/cpp-example-2.png)
+
+Look at the source file if needed: [examples/cpp-example-2.puml](examples/cpp-example-2.puml)
 
 ## Supported languages
 I support languages when I need it. When I found the best generator, as it generally works for 95% of my needs, I do a fork to adapt it. Then I integrate them here, so they can be easily ran and support post-processing features. **Generators are far from being perfect, they don't support some modern syntax and do don't generate associations**.
@@ -201,3 +246,10 @@ class CppConvertor extends Converter {
 
 **Change supported generators to your forks**
 Just edit `Dockerfile` to clone your forks instead mines :)
+
+
+## Project status
+I don't plan to maintain this project, I want to "just make it work" and not expand it further. But I'm happy to document how to use it and how it works in case it's useful to someone else in my class or outside. I guess a lot of IT students are learning OOP and need to have up-to-date UML diagrams... If you want to do other changes or support other languages, feel free to contribute or continue in your own fork. If you want to take maintenance burden here, feel free to open an issue to discuss this :)
+
+## License
+The code present in this repository is released under [MIT](LICENSE). The licenses of supported generators is independent of this license as we are running the generators as separated CLIs (they are separated processes, ctp is just a glue around it to easily run them).
