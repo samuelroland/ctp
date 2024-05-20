@@ -163,9 +163,7 @@ See more options and usage below.
 
 **Warning: the CLI erase the latest diagram file, make sure you didn't change anything outside the static section or that you can recover it. Ex: `ctp java src/ project` will erase `project.puml` and `project.puml.tmp`.**
 
-## Advanced usage
-
-**Static part**  
+## Static section
 Once you generate your diagram once, you probably want to make some small. If you directly edit your schema, you will lose your changes at next schema generation because the file is just erased each time. I defined a *static section* in generated file, meaning a section that is not erased during regeneration and can contain special actions on the dynamic part.
 
 At the start of the schema you should find a marker `' STATIC` and an ending marker `' ENDSTATIC`. You can safely add lines inside. You probably noticed the `' REMOVE` line, after this you can add regex patterns (in comments so PlantUML don't consider them) that will be **removed** in the dynamic part. For example to remove a line like `- currentTime: Time` you could write `' - .*: Time\n`. This is particularly useful to remove some existing lines like associations you want to change !
@@ -250,7 +248,6 @@ class CppConvertor extends Converter {
 
 **Change supported converters to your forks**
 Just edit `Dockerfile` to clone your forks instead mines :)
-
 
 ## Project status
 I don't plan to maintain this project, I want to "just make it work" and not expand it further. But I'm happy to document how to use it and how it works in case it's useful to someone else in my class or outside. I guess a lot of IT students are learning OOP and need to have up-to-date UML diagrams... If you want to do other changes or support other languages, feel free to contribute or continue in your own fork. If you want to take maintenance burden here, feel free to open an issue to discuss this :)
