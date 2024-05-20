@@ -60,9 +60,12 @@ It gives us this raw diagram
 
 ![examples/cpp-example-1.png](examples/cpp-example-1.png)
 
-We want a title, scale the image, add hidden links to rearrange the diagram:
+We want a title, scale the image, and add hidden links to rearrange the diagram. Let's do it inside the static section after the default style:
 ```
-...
+' Style
+hide empty members
+hide circle
+skinparam classAttributeIconSize 0
 scale 2
 title LastRobotsStanding game
 
@@ -101,16 +104,16 @@ We need to run generation again to have the remove patterns applied: `ctp cpp . 
 Look at the source file if needed: [examples/cpp-example-2.puml](examples/cpp-example-2.puml)
 
 ## Supported languages
-I support languages when I need it. When I found the best generator, as it generally works for 95% of my needs, I do a fork to adapt it. Then I integrate them here, so they can be easily ran and support post-processing features. **Generators are far from being perfect, they don't support some modern syntax and do don't generate associations**.
+I support languages when I need it. When I found the best converter, as it generally works for 95% of my needs, I do a fork to adapt it. Then I integrate them here, so they can be easily ran and support post-processing features. **converters are far from being perfect, they don't support some modern syntax and do don't generate associations**.
 
 ### Java
-- Fork of generator: https://github.com/samuelroland/plantuml-parser
+- Fork of converter: https://github.com/samuelroland/plantuml-parser
 - Modifications: see README of given repos
 - License: [Apache-2.0](https://github.com/samuelroland/plantuml-parser/blob/main/LICENSE)
 - Note: Thanks a lot to @shuzijun for your effort in making in this nice tool, this got me started with this little project !
 
 ### Python
-- Fork of generator: https://github.com/samuelroland/hpp2plantuml
+- Fork of converter: https://github.com/samuelroland/hpp2plantuml
 - Modifications: see README of given repos
 - License: [MIT](https://github.com/samuelroland/hpp2plantuml/blob/master/LICENSE) - Copyright (c) 2016 T
 - Note: Thanks a lot to @thibaultmarin for this nice converter, it's really useful !
@@ -178,10 +181,6 @@ skinparam classAttributeIconSize 0
 ```
 
 
-**TODO: implement REPLACE keyword**
-
-**TODO: implement automatic associations generation with attribute name and correct cardinality, a not so basic task. Wanna help ?**
-
 ## How it works
 
 **High level steps overview:**
@@ -211,10 +210,10 @@ docker image rm ctp
 
 ## How to extend or enhance
 I support the languages I need, 
-Need to support another generator for another programming language ? Need to tweak the default style or enhance the post mix ? Here are a few hints on how you can do it. If you consider your changes useful, please open a PR here.
+Need to support another converter for another programming language ? Need to tweak the default style or enhance the post mix ? Here are a few hints on how you can do it. If you consider your changes useful, please open a PR here.
 
 **New language support**
-1. Find or create a new plantuml generator for this language. It needs to have a CLI associated to be called by `ctp`.
+1. Find or create a new plantuml converter for this language. It needs to have a CLI associated to be called by `ctp`.
 1. Eventually fork it to adapt it to your own needs
 1. Create a new converter class that extends `Convertor`
 1. Use it in `CTP.main()` inside `convertors` variable
@@ -244,12 +243,16 @@ class CppConvertor extends Converter {
 }
 ```
 
-**Change supported generators to your forks**
+**Change supported converters to your forks**
 Just edit `Dockerfile` to clone your forks instead mines :)
 
 
 ## Project status
 I don't plan to maintain this project, I want to "just make it work" and not expand it further. But I'm happy to document how to use it and how it works in case it's useful to someone else in my class or outside. I guess a lot of IT students are learning OOP and need to have up-to-date UML diagrams... If you want to do other changes or support other languages, feel free to contribute or continue in your own fork. If you want to take maintenance burden here, feel free to open an issue to discuss this :)
 
+**TODO: implement REPLACE keyword**
+
+**TODO: implement automatic associations generation with attribute name and correct cardinality, a not so basic task. Wanna help ?**
+
 ## License
-The code present in this repository is released under [MIT](LICENSE). The licenses of supported generators is independent of this license as we are running the generators as separated CLIs (they are separated processes, ctp is just a glue around it to easily run them).
+The code present in this repository is released under [MIT](LICENSE). The licenses of supported converters is independent of this license as we are running the converters as separated CLIs (they are separated processes, ctp is just a glue around it to easily run them).
