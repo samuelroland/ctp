@@ -1,6 +1,6 @@
 # ctp
 
-![branding](ctp.png)
+![branding](branding.png)
 
 ```sh
 $ ctp
@@ -22,7 +22,7 @@ Repository: https://github.com/samuelroland/ctp
 Docs: See README.md in repository
 ```
 
-## Example with current codebase
+## Demo with current codebase
 We have a folder structure with a few Java classes in `src`, the entrypoint is `CTP.java`
 ```
 .
