@@ -66,15 +66,15 @@ We want a title, scale the image, and add hidden links to rearrange the diagram.
 hide empty members
 hide circle
 skinparam classAttributeIconSize 0
-+scale 2
-+title LastRobotsStanding game
++ scale 2
++ title LastRobotsStanding game
 
 ' Additions
-+RobotState "1"*--"1" Robot: manage info >
-+Game -[hidden]- Roboto
-+RobotPack -[hidden]- UpdatesPack
++ RobotState "1"*--"1" Robot: manage info >
++ Game -[hidden]- Roboto
++ RobotPack -[hidden]- UpdatesPack
 
-+Robot <|-- Roboto
++ Robot <|-- Roboto
 ```
 
 In generated diagram, we want to remove these 2 attributes and use 2 associations instead
@@ -87,14 +87,14 @@ class Game {
 so we add these 2 unique patterns under `REMOVE` (those are external class in a dependency, this is why it is not in this schema)
 ```diff
 ' REMOVE
-+' - robots: std::vector<RobotState>
-+' - boni: std::vector<Bonus>
++ ' - robots: std::vector<RobotState>
++ ' - boni: std::vector<Bonus>
 ```
 and we add the associations manually
 ```diff
 ' Additions
-+Game "1"-->"*" RobotState: manage >
-+Game "1"-->"*" Bonus: offer >
++ Game "1"-->"*" RobotState: manage >
++ Game "1"-->"*" Bonus: offer >
 RobotState "1"*--"1" Robot: manage info >
 Game -[hidden]- Roboto
 RobotPack -[hidden]- UpdatesPack
