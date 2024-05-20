@@ -5,15 +5,14 @@
 
 ' Style
 hide empty members
-hide circle
 skinparam classAttributeIconSize 0
-
+scale 2
 ' Additions
-
+CTP .down.> PostMix: uses >
+CTP .> Converter: calls >
 ' REMOVE
 
 ' ENDSTATIC
-
 abstract class Converter {
 	- lang: String
 	+ {static} FILE_INSERT: String

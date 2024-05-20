@@ -22,7 +22,32 @@ Repository: https://github.com/samuelroland/ctp
 Docs: See README.md in repository
 ```
 
-TODO: examples with current codebase
+## Example with current codebase
+We have a folder structure with a few Java classes in `src`, the entrypoint is `CTP.java`
+```
+.
+├── ...
+└── src
+   ├── Converter.java
+   ├── CppConverter.java
+   ├── CTP.java
+   ├── JavaConverter.java
+   ├── PostMix.java
+   └── Util.java
+```
+
+By running `ctp java src diagram` it generates a `diagram.puml` file:
+
+![generation gif](examples/generation.gif)
+
+Then inside the static section we can make changes to the style, add missing associations. If we change the code (here we rename `Util.fail()` into `Util.error()`) we can safely regenerate the diagram the static section will be preserved !
+
+![edition gif](examples/edition.gif)
+
+See the generated file in [examples/ctp.puml](examples/ctp.puml) and [exported image](examples/ctp.png)
+
+![examples/ctp.png](examples/ctp.png)
+
 
 
 ## Introduction
