@@ -71,7 +71,7 @@ public class PostMix {
         for (String line : lines) {
             // Search for STATIC_REMOVE_KW
             if (!foundRemoveKeyword) {
-                if (line.trim().equals(Util.STATIC_REMOVE_KW)) {
+                if (line.trim().equals("' " + Util.STATIC_REMOVE_KW)) {
                     foundRemoveKeyword = true;
                 }
                 continue;
