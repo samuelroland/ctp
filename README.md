@@ -49,7 +49,7 @@ See the generated file in [examples/ctp.puml](examples/ctp.puml) and [exported i
 ![examples/ctp.png](examples/ctp.png)
 
 ## Demo with a C++ codebase
-I took a random C++ we made at school, let's clone the repos and run CTP:
+I took a random C++ project we made at school, let's clone the repos and run CTP:
 ```
 git clone https://github.com/HEIGVD-PRG1-F-2022/lab06-lastrobotstanding-roboto.git
 cd lab06-lastrobotstanding-roboto
@@ -107,23 +107,6 @@ We need to run generation again to have the remove patterns applied: `ctp cpp . 
 ![examples/cpp-example-2.png](examples/cpp-example-2.png)
 
 Look at the source file if needed: [examples/cpp-example-2.puml](examples/cpp-example-2.puml)
-
-## Supported languages
-I support languages when I need it. When I found the best converter, as it generally works for 95% of my needs, I do a fork to adapt it. Then I integrate them here, so they can be easily ran and support post-processing features. **converters are far from being perfect, they don't support some modern syntax and do don't generate associations**.
-
-### Java
-- Fork of converter: https://github.com/samuelroland/plantuml-parser
-- Modifications: see README of given repos
-- License: [Apache-2.0](https://github.com/samuelroland/plantuml-parser/blob/main/LICENSE)
-- Note: Thanks a lot to @shuzijun for your effort in making in this nice tool, this got me started with this little project !
-
-### Python
-- Fork of converter: https://github.com/samuelroland/hpp2plantuml
-- Modifications: see README of given repos
-- License: [MIT](https://github.com/samuelroland/hpp2plantuml/blob/master/LICENSE) - Copyright (c) 2016 T
-- Note: Thanks a lot to @thibaultmarin for this nice converter, it's really useful !
-- They are known bugs, see the README
-- **Warning: only .h and .hpp (not .cpp) files are parsed in given folder ! Make sure free functions are declared in a header file and don't use the syntax `int a{}` as it will ignore the variable.**
 
 ## How to setup
 *I know this is not a straightforward setup but is the best I can do in the short time I invest in this mini project...*
@@ -186,6 +169,26 @@ skinparam classAttributeIconSize 0
 
 ## How it works
 
+### Supported languages
+I support languages when I need it. When I found the best converter, as it generally works for 95% of my needs, I do a fork to adapt it. Then I integrate them here, so they can be easily ran and support post-processing features. **converters are far from being perfect, they don't support some modern syntax and do don't generate associations**.
+
+Note: you don't need to install these converters, they are bundle in CTP. The links are only useful if you want to change the behavior of these converters or see my changes.
+
+#### Java
+- Fork of converter: https://github.com/samuelroland/plantuml-parser
+- Modifications: see README of given repos
+- License: [Apache-2.0](https://github.com/samuelroland/plantuml-parser/blob/main/LICENSE)
+- Note: Thanks a lot to @shuzijun for your effort in making in this nice tool, this got me started with this little project !
+
+#### Python
+- Fork of converter: https://github.com/samuelroland/hpp2plantuml
+- Modifications: see README of given repos
+- License: [MIT](https://github.com/samuelroland/hpp2plantuml/blob/master/LICENSE) - Copyright (c) 2016 T
+- Note: Thanks a lot to @thibaultmarin for this nice converter, it's really useful !
+- They are known bugs, see the README
+- **Warning: only .h and .hpp (not .cpp) files are parsed in given folder ! Make sure free functions are declared in a header file and don't use the syntax `int a{}` as it will ignore the variable.**
+
+### Generation
 **High level steps overview:**
 1. Check CLI args and show errors if needed
 1. The output file is a ".tmp" variant
@@ -212,7 +215,6 @@ docker image rm ctp
 ```
 
 ## How to extend or enhance
-I support the languages I need, 
 Need to support another converter for another programming language ? Need to tweak the default style or enhance the post mix ? Here are a few hints on how you can do it. If you consider your changes useful, please open a PR here.
 
 **New language support**
@@ -223,7 +225,7 @@ Need to support another converter for another programming language ? Need to twe
 1. Define a constructor to call parent constructor with a language identifier
 1. Define the arguments needed (included the name of the external CLI) with `FILE_INSERT` and `FOLDER_INSERT` constants to indicate where to insert those 2 info
 1. If needed, override `defaultPumlStyle()` with more or other default styles
-1. Build/Install your external CLI in the Dockerfile``, so your command can be called from inside the container.
+1. Build/Install your external CLI in the Dockerfile, so your command can be called from inside the container.
 1. Build the `Dockerfile` and try it !
 
 Here is an example with how the C++ converter is defined (CLI is called `hpp2plantuml`)
@@ -255,6 +257,8 @@ I don't plan to maintain this project, I want to "just make it work" and not exp
 **TODO: implement REPLACE keyword**
 
 **TODO: implement automatic associations generation with attribute name and correct cardinality, a not so basic task. Wanna help ?**
+
+**TODO**: implement existing diagram and language detection, define `diagram.puml` as default name, follow .gitignore to avoid build folders. Just run `ctp` instead of `ctp java src diagram`
 
 ## License
 The code present in this repository is released under [MIT](LICENSE). The licenses of supported converters is independent of this license as we are running the converters as separated CLIs (they are separated processes, ctp is just a glue around it to easily run them).
