@@ -116,24 +116,29 @@ Look at the source file if needed: [examples/cpp-example-2.puml](examples/cpp-ex
    ```
 1. Build the Docker image
    ```sh
-    docker build -t ctp .
+   docker build -t ctp .
    ```
 1. Run the CLI
    Note: We mount the current folder to `/code` in container, to give it access to the current folder. Therefore, the given path (first argument) needs to be 
     ```sh
     docker run -v .:/code ctp
     ```
-1. Instead of typing `docker run -v .:/code ctp` every time, I recommend to setup an alias like this. You can persist this alias in your shell config (i.e. `.bashrc`)
-    ```sh
-    # Standard version
-    alias ctp="docker run -v .:/code ctp"
-
-    # Or if you run docker as root
-    ctp(){
-        sudo docker run -v .:/code ctp "$@"
-        if [ -f "$3.puml" ]; then
-            sudo chown $USER "$3.puml"
+1. Instead of typing `docker run -v .:/code ctp` every time, I recommend to setup a shell wrapper around it.
+    1. With Fish, you can quickly install it: `gnfit ctp` [what's that ?](https://codeberg.org/samuelroland/productivity/src/branch/main/HEIG/tools/README.md)
+    1. With Bash, you can persist this alias in your shell config (`~/.bashrc`).
+    ```bash
+    # Shell wrapper around the docker image named "ctp" and locally built from https://github.com/samuelroland/ctp
+    function ctp() {
+        # We need to create the output file before the container to set permission to $USER instead of root
+        if test $# -ge 3; then
+            name=$3
+            if ! echo $name | grep .puml; then
+                name="$name.puml"
+            fi
+            touch "$name"
         fi
+
+        docker run -v .:/code ctp $@
     }
     ```
     You can now just run it, here is an example for a Java project with all classes inside src/main and an output diagram named diagram.puml.
