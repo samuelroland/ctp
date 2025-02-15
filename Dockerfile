@@ -1,7 +1,7 @@
 # CTP Docker image used to easily use the CLI without installing more dependencies than Docker
 
 # Build Java support
-FROM gradle:jdk17-alpine as buildjar
+FROM gradle:jdk17-alpine AS buildjar
 ADD "https://api.github.com/repos/samuelroland/plantuml-parser/commits?per_page=1" latest_commit
 RUN git clone https://github.com/samuelroland/plantuml-parser.git /plantuml-parser
 WORKDIR /plantuml-parser
