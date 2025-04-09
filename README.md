@@ -185,7 +185,7 @@ Note: you don't need to install these converters, they are bundle in CTP. The li
 - License: [Apache-2.0](https://github.com/samuelroland/plantuml-parser/blob/main/LICENSE)
 - Note: Thanks a lot to @shuzijun for your effort in making in this nice tool, this got me started with this little project !
 
-#### Python
+#### C++
 - Fork of converter: https://github.com/samuelroland/hpp2plantuml
 - Modifications: see README of given repos
 - License: [MIT](https://github.com/samuelroland/hpp2plantuml/blob/master/LICENSE) - Copyright (c) 2016 T
