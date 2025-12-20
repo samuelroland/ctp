@@ -1,6 +1,8 @@
-# ctp
+# ctp - Code To PlantUML
 
 ![branding](branding.png)
+
+<!-- why not intellij diagram generation ? -->
 
 ```sh
 $ ctp
@@ -49,6 +51,9 @@ See the generated file in [examples/ctp.puml](examples/ctp.puml) and [exported i
 ![examples/ctp.png](examples/ctp.png)
 
 ## Demo with a C++ codebase
+<details>
+<summary>See the process in details</summary>
+
 I took a random C++ project we made at school, let's clone the repos and run CTP:
 ```
 git clone https://github.com/HEIGVD-PRG1-F-2022/lab06-lastrobotstanding-roboto.git
@@ -103,12 +108,23 @@ Robot <|-- Roboto
 ```
 
 We need to run generation again to have the remove patterns applied: `ctp cpp . diagram` and bam, the 2 lines have been removed, here is the final diagram.
+</details>
 
 ![examples/cpp-example-2.png](examples/cpp-example-2.png)
 
 Look at the source file if needed: [examples/cpp-example-2.puml](examples/cpp-example-2.puml)
 
-## How to setup
+## How to install
+The setup is really easy if you are using Fish and LXUP.
+```sh
+lxup get ctp
+ctp # run once to build the Docker image
+```
+*[Help: I don't have `lxup` !](../tools/README.md)*
+
+<details>
+<summary>See the alternative hard way to install</summary>
+
 *I know this is not a straightforward setup but is the best I can do in the short time I invest in this mini project...*
 1. Clone the repository
    ```sh
@@ -124,7 +140,7 @@ Look at the source file if needed: [examples/cpp-example-2.puml](examples/cpp-ex
     docker run -v .:/code ctp
     ```
 1. Instead of typing `docker run -v .:/code ctp` every time, I recommend to setup a shell wrapper around it.
-    1. With Fish, you can quickly install it: `gnfit ctp` [what's that ?](https://codeberg.org/samuelroland/productivity/src/branch/main/HEIG/tools/README.md)
+    1. With Fish, you can quickly install it: `lxup get ctp` [what's that ?](https://codeberg.org/samuelroland/productivity/src/branch/main/HEIG/tools/README.md)
     1. With Bash, you can persist this alias in your shell config (`~/.bashrc`).
     ```bash
     # Shell wrapper around the docker image named "ctp" and locally built from https://github.com/samuelroland/ctp
@@ -146,6 +162,7 @@ Look at the source file if needed: [examples/cpp-example-2.puml](examples/cpp-ex
     ctp java src/main diagram
     ```
 1. Make sure to remove do the manual work after generation (remove existing incorrect/incomplete associations, add missing one, changing style, add notes, ...)
+</details>
 
 See more options and usage below.
 
